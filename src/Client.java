@@ -1,3 +1,4 @@
+package New;
 
 
 import java.io.*;
@@ -22,14 +23,15 @@ public class Client {
 				Date dateobj = new Date();
 				String timeStamp = df.format(dateobj);
  
-				str= str+ ","+timeStamp;
-				System.out.println(str);
+				str= str+ ", "+timeStamp;
 				try{
 					socket=new Socket(serverHost, 4444);
 					os =new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 					os.write(str);
+					System.out.println("Client sent: "+ str);
 					os.flush();
-				
+					
+					
 				}catch(UnknownHostException e){
 					System.err.println(e);
 					System.exit(1);
@@ -41,7 +43,7 @@ public class Client {
 				os.close();
 				socket.close();
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(5000);
 				} catch (InterruptedException ex) {
 					Thread.currentThread().interrupt();
 				}

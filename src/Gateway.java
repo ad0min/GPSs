@@ -1,3 +1,5 @@
+package New;
+
 import java.net.*;
 import java.io.*;
 public class Gateway {
@@ -15,7 +17,13 @@ public class Gateway {
 		try{
 			while(true){
 				Socket socket = listener.accept();
-				new ServiceThread(socket, clientNo++).start();
+				ServiceThread t= new ServiceThread(socket, clientNo++);
+				t.start();
+//				try{
+//				t.join();
+//				}catch(Exception e ){
+//					System.out.println(e);
+//				}
 			}
 		}catch(IOException e){
 			System.err.println(e);
@@ -26,6 +34,31 @@ public class Gateway {
 //		}
 		
 	}
+	
+	
+	
+//	public static void main(String []args){
+//		InputStreamReader cin =null;
+//		try {
+//		cin = new InputStreamReader(System.in);
+//		String s = null;
+//			do {
+//				BufferedReader br = new BufferedReader(cin);
+//				s= br.readLine();
+//				System.out.println(s);
+//				
+//				Mqtt temp = new Mqtt();
+//				temp.New(s);
+//				
+//			} while (s != "q");
+//
+//			cin.close();
+//		}catch(IOException e){
+//			System.out.println(e);
+//		}
+//	}
+	
+	
 	public static class ServiceThread extends Thread{
 		private int clientNo;
 		private Socket socket;
@@ -39,7 +72,10 @@ public class Gateway {
 				String line;
 				while((line= is.readLine())!=null){
 					
-					System.out.println(line);
+					System.out.println("Gateway receive: "+line);
+					
+					Mqtt _info = new Mqtt();
+					_info.New(line);
 				}
 			}
 			catch(IOException e){
