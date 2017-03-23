@@ -72,10 +72,10 @@ public class Client {
 	
 	final String serverHost="localhost";
 	Socket socket =null;
-	public static void main(String []argv){
-		Client cl= new Client();
-		cl.init(2000);
-	}
+//	public static void main(String []argv){
+//		Client cl= new Client();
+//		cl.init(2000);
+//	}
 	
 	public void init(int t) {
 	       final String serverHost = "localhost";

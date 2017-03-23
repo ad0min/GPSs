@@ -1,6 +1,6 @@
 package client;
 import java.awt.BorderLayout;
-import java.awt.*; 
+import java.awt.ScrollPane;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
@@ -9,12 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JPanel;
+import javax.swing.text.DefaultCaret;
 
 public class ClientGUI extends JFrame{
 	private JTextField setTime;
@@ -32,6 +33,7 @@ public class ClientGUI extends JFrame{
 	private Socket socket;
 	private String txt= "gps.txt";
 	private boolean flat_conn=true;// co ket noi 
+	private DefaultCaret caret ;
 	
 	public static void main(String []argv){
 		try {
@@ -85,8 +87,8 @@ public class ClientGUI extends JFrame{
 		
 		connect.addActionListener(new ActionListener(){
 			public void actionPerformed(final ActionEvent arg){
-					
-				flat_conn = true;
+				flat_conn = true;				
+
 				sendGPS();
 			}
 		});
@@ -102,13 +104,11 @@ public class ClientGUI extends JFrame{
 		displayTA = new JTextArea();
 
 		scrollPane_1.setViewportView(displayTA);
-
+		
 		
 		
 	}
-	public void display(String e){
-		displayTA.append(e+"\n");
-	}
+	
 	public void getGPStext(String filename){
 		try{
 			in = new FileInputStream(filename);
@@ -132,9 +132,7 @@ public class ClientGUI extends JFrame{
 				try{
 					writer.write(str+"\n");
 					writer.flush();
-					display("Send: "+str);
-					System.out.println("Client sent: "+ str);
-					
+					display("Send: "+str);			
 				}catch(IOException e){
 					e.printStackTrace();
 					display("Exception: "+e);
@@ -160,6 +158,11 @@ public class ClientGUI extends JFrame{
 			display("Exception: "+e);
 		}
 				
+	}
+	public void display(String e){
+		displayTA.append(e+"\n");
+		displayTA.setCaretPosition(displayTA.getDocument().getLength());
+		displayTA.update(displayTA.getGraphics());
 	}
 	
 }
